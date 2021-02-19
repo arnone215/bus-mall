@@ -1,0 +1,48 @@
+h1, h3, ul{
+  text-align: center;
+}
+
+body {
+  background-color: azure;
+}
+
+section {
+  background-color: lavender;
+  width: 80%;
+  margin: auto;
+  border: 5px solid black;
+  height: 600px;
+}
+
+img {
+  width: 300px;
+  height: 300px;
+  margin-left: 15px;
+}
+
+img:hover {
+  opacity: 50%;
+}
+
+div {
+  text-align: center;
+  width: 300px;
+  font-size: 2em;
+  margin: 25px auto 25px auto;
+  background-color: aquamarine;
+
+}
+div:hover{
+  background-color: blue;
+  cursor: pointer;
+}
+
+ul {
+  text-align: center;
+}
+
+#chart{
+  width: 900px;
+  height: 600px;
+
+}
