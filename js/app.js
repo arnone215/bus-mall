@@ -37,7 +37,6 @@ new Products('tauntaun');
 new Products('unicorn');
 new Products('usb');
 
-// functions
 function getRandomProductIndex() {
   return Math.floor(Math.random() * myProducts.length);
 }
@@ -95,8 +94,11 @@ function handleClick(event) {
     if (clicks === allowedVotes) {
       myContainer.removeEventListener('click', handleClick);
 
-      renderResults();
-      // renders our results in a list
+      // renderResults(); 
+      
+      // ^^^^^^^^^^^^^^^^^^ THIS IS WHY IT WASN'T WORKING WITH A BUTTON CLICK, DUE TO IT ALREADY RENDERING NO MATTER WHAT...
+
+      // LEARN FROM THIS MISTAKE RIGHT HERE
     }
   } else {
     alert('click on an image!');
