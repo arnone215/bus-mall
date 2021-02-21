@@ -1,26 +1,15 @@
 'use strict';
 
-// create some objects
-// will have an array of objects, and randomly display 3 on page
-// we will track our clicks
-// when we hit 10 clicks, remove event listener - close polls
-// when polls have closed, we render the results
-// results: name of the object, number of times it was viewed, and the number of times voted
+let myProducts = [];
+let allowedVotes = 25;
+let clicks = 0;
+let renderQueue = [];
+let myContainer = document.getElementById('container');
+let imgOneEl = document.getElementById('image-one');
+let imgTwoEl = document.getElementById('image-two');
+let imgThreeEl = document.getElementById('image-three');
+let myList = document.getElementById('list');
 
-
-
-//global variables
-var myProducts = [];
-var allowedVotes = 25;
-var clicks = 0;
-var renderQueue = [];
-var myContainer = document.getElementById('container');
-var imgOneEl = document.getElementById('image-one');
-var imgTwoEl = document.getElementById('image-two');
-var imgThreeEl = document.getElementById('image-three');
-var myList = document.getElementById('list');
-
-// constructor
 function Products(name) {
   this.name = name;
   this.src = `img/${name}.jpg`;
@@ -29,12 +18,6 @@ function Products(name) {
   myProducts.push(this);
 }
 
-// functions
-function getRandomProductIndex() {
-  return Math.floor(Math.random() * myProducts.length);
-}
-
-// executable code
 new Products('bag');
 new Products('banana');
 new Products('bathroom');
@@ -53,6 +36,11 @@ new Products('sweep');
 new Products('tauntaun');
 new Products('unicorn');
 new Products('usb');
+
+function getRandomProductIndex() {
+  return Math.floor(Math.random() * myProducts.length);
+}
+
 
 function populateRenderQueue() {
   renderQueue = [];
@@ -76,9 +64,6 @@ function renderMyProducts() {
   var productTwo = renderQueue[1];
   var productThree = renderQueue[2];
 
-  // while (productOne === productTwo) {
-  //   productTwo = getRandomProductIndex();
-  // }
   imageProperties(imgOneEl, productOne);
   imageProperties(imgTwoEl, productTwo);
   imageProperties(imgThreeEl, productThree);
@@ -86,48 +71,45 @@ function renderMyProducts() {
 
 function renderResults() {
   for (var i = 0; i < myProducts.length; i++) {
-    // create element
     var li = document.createElement('li');
-    // give it content
     li.textContent = `${myProducts[i].name} had ${myProducts[i].votes} votes, and was seen ${myProducts[i].views} times.`;
-    //append it to the dom
     myList.appendChild(li);
   }
 }
 
 renderMyProducts(); // gives us initial images
 
-
-// event handler - takes one parameter: event or often 'e'
 function handleClick(event) {
-  // this grabs the image alt property - which is the same as the product name property
   var clickedProduct = event.target.alt;
   if (clickedProduct) {
-    console.log(clickedProduct);
-
     clicks++;
 
     for (var i = 0; i < myProducts.length; i++) {
-      // we are looking at ALL the name properties inside the product array and comparing them to our image alt property
       if (clickedProduct === myProducts[i].name) {
-        // if true, we KNOW we have the correct product object and we can increment its votes.
         myProducts[i].votes++;
       }
     }
 
     renderMyProducts(); // gives us the images after each click/vote
-
     if (clicks === allowedVotes) {
-      // remove event listener takes parameters; event, and the call back function.
       myContainer.removeEventListener('click', handleClick);
 
-      renderResults();
-      // renders our results in a list
+      // renderResults(); 
+      
+      // ^^^^^^^^^^^^^^^^^^ THIS IS WHY IT WASN'T WORKING WITH A BUTTON CLICK, DUE TO IT ALREADY RENDERING NO MATTER WHAT...
+
+      // LEARN FROM THIS MISTAKE RIGHT HERE
     }
   } else {
     alert('click on an image!');
   }
 }
+function handleListClick(event) {
+  if (clicks === allowedVotes) {
+    renderResults();
+  }
+}
 
 // event listener
 myContainer.addEventListener('click', handleClick);
+myList.addEventListener('click', handleListClick);
