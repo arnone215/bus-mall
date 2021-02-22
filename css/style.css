@@ -3,14 +3,15 @@ h1, h3, ul{
 }
 
 body {
-  background-color: azure;
+  color: whitesmoke;
+  background-color: black;
 }
 
 section {
-  background-color: lavender;
+  background-color: lightgray;
   width: 80%;
   margin: auto;
-  border: 5px solid black;
+  border: 5px solid red;
   height: 600px;
 }
 
@@ -29,11 +30,12 @@ div {
   width: 300px;
   font-size: 2em;
   margin: 25px auto 25px auto;
-  background-color: aquamarine;
+  color: black;
+  background-color: lightgray;
 
 }
 div:hover{
-  background-color: blue;
+  background-color: lightgray;
   cursor: pointer;
 }
 

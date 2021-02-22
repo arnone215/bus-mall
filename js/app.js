@@ -95,7 +95,7 @@ function handleClick(event) {
       myContainer.removeEventListener('click', handleClick);
 
       // renderResults(); 
-      
+
       // ^^^^^^^^^^^^^^^^^^ THIS IS WHY IT WASN'T WORKING WITH A BUTTON CLICK, DUE TO IT ALREADY RENDERING NO MATTER WHAT...
 
       // LEARN FROM THIS MISTAKE RIGHT HERE
