@@ -79,6 +79,9 @@ function renderResults() {
     li.textContent = `${myProducts[i].name} had ${myProducts[i].votes} votes, and was seen ${myProducts[i].views} times.`;
     resultButton.appendChild(li);
   }
+  console.log('show us the results');
+  console.log(myProducts);
+  console.log('///////////////////////');
   saveResults();
 }
 
@@ -114,7 +117,12 @@ function handleListClick(event) {
 
 function getResults() {
   let foundResults = localStorage.getItem('voteResults');
+  foundResults = JSON.parse(foundResults);
+  if (foundResults !== null) {
+    myProducts = foundResults;
+  }
   console.log(foundResults);
+  return foundResults;
 }
 
 function saveResults() {
@@ -122,8 +130,20 @@ function saveResults() {
   localStorage.setItem('voteResults', value);
 }
 
+function mainFunction() {
+  console.log(myProducts);
+  console.log('beginning of array');
+  let results = getResults();
+  if (results !== null) {
+    console.log('found results');
+    renderResults();
+  } else {
+    console.log('no results');
+    productCatalog();
+    renderMyProducts();
+    myContainer.addEventListener('click', handleClick);
+    resultButton.addEventListener('click', handleListClick);
+  }
+}
 
-productCatalog();
-renderMyProducts();
-myContainer.addEventListener('click', handleClick);
-resultButton.addEventListener('click', handleListClick);
+mainFunction();
