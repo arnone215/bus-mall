@@ -75,13 +75,10 @@ function renderMyProducts() {
 
 function renderResults() {
   for (var i = 0; i < myProducts.length; i++) {
-    var li = document.createElement('li');
-    li.textContent = `${myProducts[i].name} had ${myProducts[i].votes} votes, and was seen ${myProducts[i].views} times.`;
-    resultButton.appendChild(li);
+    // var li = document.createElement('li');
+    // li.textContent = `${myProducts[i].name} had ${myProducts[i].votes} votes, and was seen ${myProducts[i].views} times.`;
+    // resultButton.appendChild(li);
   }
-  console.log('show us the results');
-  console.log(myProducts);
-  console.log('///////////////////////');
   saveResults();
 }
 
@@ -112,17 +109,13 @@ function handleClick(event) {
 function handleListClick(event) {
   if (clicks === allowedVotes) {
     renderResults();
+    renderChart();
   }
 }
 
 function getResults() {
   let foundResults = localStorage.getItem('voteResults');
-  foundResults = JSON.parse(foundResults);
-  if (foundResults !== null) {
-    myProducts = foundResults;
-  }
   console.log(foundResults);
-  return foundResults;
 }
 
 function saveResults() {
@@ -130,20 +123,63 @@ function saveResults() {
   localStorage.setItem('voteResults', value);
 }
 
-function mainFunction() {
-  console.log(myProducts);
-  console.log('beginning of array');
-  let results = getResults();
-  if (results !== null) {
-    console.log('found results');
-    renderResults();
-  } else {
-    console.log('no results');
-    productCatalog();
-    renderMyProducts();
-    myContainer.addEventListener('click', handleClick);
-    resultButton.addEventListener('click', handleListClick);
+
+
+
+productCatalog();
+renderMyProducts();
+myContainer.addEventListener('click', handleClick);
+resultButton.addEventListener('click', handleListClick);
+
+
+
+
+function renderChart() {
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let productNames = [];
+  let productViews = [];
+  let productClicks = [];
+  for (let i = 0; i < myProducts.length; i++) {
+    productNames.push(myProducts[i].name);
+    productViews.push(myProducts[i].views);
+    productClicks.push(myProducts[i].votes);
   }
+  console.log('productNames: ',productNames);
+  console.log('productViews', productViews);
+  console.log('productClicks', productClicks);
+
+
+  var chartObject = {
+    type: 'bar',
+    data: {
+      labels: productNames,
+      datasets: [{
+        label: 'Views',
+        data: productViews,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 3
+      },
+      {
+        label: 'Clicks',
+        data: productClicks,
+        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+        borderColor: 'rgba(153, 102, 255, 1)',
+        borderWidth: 3
+      }]
+    },
+    responsive: false,
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  };
+
+  let myChart = new Chart(ctx, chartObject);
 }
 
-mainFunction();
