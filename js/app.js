@@ -47,8 +47,8 @@ function getRandomProductIndex() {
 
 
 function populateRenderQueue() {
-  renderQueue = [];
-  while (renderQueue.length < 3) {
+  // renderQueue = [];
+  while (renderQueue.length < 6) {
     var uniqueProduct = getRandomProductIndex();
     while (!renderQueue.includes(uniqueProduct)) {
       renderQueue.push(uniqueProduct);
@@ -64,9 +64,9 @@ function imageProperties(imgEl, prod) {
 
 function renderMyProducts() {
   populateRenderQueue();
-  var productOne = renderQueue[0];
-  var productTwo = renderQueue[1];
-  var productThree = renderQueue[2];
+  var productOne = renderQueue.shift();
+  var productTwo = renderQueue.shift();
+  var productThree = renderQueue.shift();
 
   imageProperties(imgOneEl, productOne);
   imageProperties(imgTwoEl, productTwo);
